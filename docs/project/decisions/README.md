@@ -10,3 +10,4 @@
 - [0004 — 中文文档与 Agent 元治理](0004-chinese-docs-and-agent-governance.md)
 - [0005 — README 的用户定位](0005-readme-for-users.md)
 - [0006 — 长期架构与活动里程碑分层](0006-architecture-and-milestones.md)
+- [0007 — GitHub 协作与 CI 合并策略](0007-github-collaboration-and-ci.md)
