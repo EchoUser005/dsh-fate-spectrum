@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当前在 `feat/tool-skeleton` 上完成 `dsh-fate-spectrum@0.1.0` 发布候选：Tyme 1.5.2 八字、iztro 2.5.8 紫微、正式 Tool schema、DSH Bundle 与预构建 tarball 均已通过本地证据。完整视太阳时已确认移入后续切片；当前停在 push、PR 与公网发布授权之前。
+Phase 0、GitHub CI 基建与 `dsh-fate-spectrum@0.1.0` 发布候选已分别通过 PR #1、PR #2、PR #3 合并到 `main`。Tyme 1.5.2 八字、iztro 2.5.8 紫微、正式 Tool schema、DSH Bundle 与预构建 tarball 均已通过本地及 GitHub Actions 证据。完整视太阳时已确认移入后续切片；当前停在 Tag、GitHub Release 与 npm 公网发布授权之前。
 
 ## 活动导航
 
@@ -84,7 +84,7 @@ Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当
 - 完整视太阳时的离线地点解析、经度修正、均时差来源与跨日行为；地点交互已确认接受城市／区县。
 - 独立干支时间范围 Tool 的下一里程碑名称、Schema 和交付顺序；它用于消除周运任务中耗时且不稳定的 Web 干支历检索。
 - A2UI 走势图的纵轴究竟表达工程计算出的作用强弱、Agent 分析结论，还是两层同时展示；该业务定义进入未来 A2UI 里程碑，不在 v0.1.0 提前拍板。
-- push／PR 后的 GitHub CI 结果，以及 npm 发布后的公共源重新安装 smoke；两步都仍需对应授权。
+- npm 发布后的公共源重新安装 smoke；Tag、GitHub Release 与 npm publish 仍需当次明确授权。
 
 ## 验证状态
 
@@ -95,6 +95,7 @@ Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。C
 - PR #2 的 `merge-policy`、`quality`、`node-22-compatibility` 三项检查通过；
 - `main` 规则集已启用上述三项必需检查、PR、线性历史、对话解决、禁止强推和禁止删除；
 - 仓库已设为 squash-only、允许 auto-merge、合并后删除分支；外部 PR 必须取得 `owner-approved` 标签。
+- PR #3 的 `merge-policy`、`quality`、`node-22-compatibility` 三项检查通过，并于 2026-08-16 squash merge 到 `main`（`6929202`）。
 
 切片 1 已取得以下 DSH 组装证据：
 
@@ -117,4 +118,4 @@ Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。C
 
 ## 唯一下一步
 
-用户审核发布候选 diff 与证据后，决定是否授权 push 当前分支并创建 PR。PR 的必需 CI 全绿、合并与版本归档分别按发布闭环停点确认；Tag、GitHub Release 和 npm publish 仍需最后一次明确授权。
+用户决定是否明确授权创建 `v0.1.0` Tag、GitHub Release 与 npm publish。获授权后从 npm 公共源重新安装，并执行最小 DSH Profile smoke；未通过前不得宣称公网安装可用。
