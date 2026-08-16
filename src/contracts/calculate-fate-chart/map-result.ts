@@ -1,7 +1,7 @@
 import type { FateChartExecutionResult } from '../../application/fate-chart/fate-chart.executor.js'
 import type { CalculateFateChartResult } from './schemas.js'
 
-const SCHEMA_VERSION = '0.1.0-dev.3' as const
+const SCHEMA_VERSION = '0.1.0' as const
 
 export function mapFateChartExecutionResult(
   execution: FateChartExecutionResult,

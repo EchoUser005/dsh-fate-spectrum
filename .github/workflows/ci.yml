@@ -85,10 +85,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Pack
-        run: |
-          mkdir -p .local/pack
-          pnpm pack --pack-destination .local/pack
+      - name: Verify packed Bundle
+        run: pnpm run pack:smoke
+
+      - name: Verify DSH Profile installation
+        run: pnpm run dsh:smoke
 
   node-22-compatibility:
     name: node-22-compatibility

@@ -122,7 +122,7 @@ function clarification(
     ok: false,
     result: {
       status: 'needs_clarification',
-      schemaVersion: '0.1.0-dev.3',
+      schemaVersion: '0.1.0',
       requestedSystems: [...requestedSystems],
       error: {
         code,

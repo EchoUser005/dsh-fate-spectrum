@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当前在 `feat/tool-skeleton` 上完成 Tyme 1.5.2 八字与 iztro 2.5.8 紫微运行时切片。`calculate_fate_chart` 的默认双系统、显式仅八字和显式仅紫微均已接入真实离线 Provider；紫微未知时辰返回覆盖全天的十三份候选盘。完整视太阳时、Bundle/tarball 和发布候选仍未完成。
+Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当前在 `feat/tool-skeleton` 上完成 `dsh-fate-spectrum@0.1.0` 发布候选：Tyme 1.5.2 八字、iztro 2.5.8 紫微、正式 Tool schema、DSH Bundle 与预构建 tarball 均已通过本地证据。完整视太阳时已确认移入后续切片；当前停在 push、PR 与公网发布授权之前。
 
 ## 活动导航
 
@@ -12,7 +12,7 @@ Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当
 - 开发技术方案：[`../develop/calculate-fate-chart-v0.1.0.md`](../develop/calculate-fate-chart-v0.1.0.md)
 - 原子能力审核稿：[`../develop/fate-chart-capability-contracts-v0.1.0.md`](../develop/fate-chart-capability-contracts-v0.1.0.md)
 - 人工测试 SOP：[`../develop/dsh-local-test-sop.md`](../develop/dsh-local-test-sop.md)
-- 当前迭代：[`iterations/2026-08-16-iztro-ziwei-runtime.md`](iterations/2026-08-16-iztro-ziwei-runtime.md)
+- 当前迭代：[`iterations/2026-08-16-v0.1-release-candidate.md`](iterations/2026-08-16-v0.1-release-candidate.md)
 - Tyme 探针：[`../develop/tyme-bazi-provider-probe-1.5.2.md`](../develop/tyme-bazi-provider-probe-1.5.2.md)
 - iztro 探针：[`../develop/iztro-ziwei-provider-probe-2.5.8.md`](../develop/iztro-ziwei-provider-probe-2.5.8.md)
 - 长期架构：[`../architecture.md`](../architecture.md)
@@ -62,7 +62,7 @@ Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当
 - DSH Tool 注册对应 Moya registry，`FateChartExecutor` 对应排盘工程 Executor，`output.render()` 对应 Observation 翻译层；未来干支历 Tool 使用独立 Executor，不与排盘 Executor 合并。
 - DSH Adapter、嵌套参数 Schema、请求 mapper、开发期 canonical mapper 与纯 Observation projector 已建立。
 - 一个 `FateChartExecutor` 先执行共享出生时刻能力，再按 `systems` 精确路由八字／紫微引擎；民用时基线仅无损透传，完整视太阳时明确未交付。
-- 当前 `0.1.0-dev.3` output schema 暴露真实八字／紫微 `success`、默认双系统 `success`、安全 Provider 失败的 `partial`、`needs_clarification` 与 `unsupported`；运行时成功结果不使用人工 fixture。
+- 当前正式 `0.1.0` output schema 暴露真实八字／紫微 `success`、默认双系统 `success`、安全 Provider 失败的 `partial`、`needs_clarification` 与 `unsupported`；运行时成功结果不使用人工 fixture。
 - `.local/dsh/cordis.dev.yml` 由脚本生成并统一忽略；实际指向构建后的 `lib/index.js`。
 - 已按“Schema 与 `--patch` 骨架 → 八字 Provider → 阶段性紫微未交付语义 → 紫微 Provider → 真实双系统”完成纵向切片；下一步进入用户 DSH 验收与 Bundle/Profile 发布候选。
 - Tyme 1.5.2 已通过合成探针验证四柱、藏干、十神、纳音、旬空、十二长生、起运、大运、重复确定性与 Provider 状态恢复。
@@ -74,14 +74,17 @@ Phase 0 与 GitHub CI 基建已分别通过 PR #1、PR #2 合并到 `main`。当
 - Observation 已向模型展开八字柱内事实与大运，也展开紫微命身宫、四化、十二宫、星曜亮度和大限；两套未知时辰都要求按候选作条件式解读。
 - README 已按真实能力补充双盘、候选盘、使用方式与核心计算分层，移除尚未交付的真太阳时承诺，并如实披露 DSH Session 数据边界。
 - 长期 A2UI 方向已明确包含大运／流年长期走势、一年内周期曲线和关键时间窗口；具体曲线语义与组件契约只在独立 A2UI 里程碑开启。
+- package 与 canonical schema 已同步提升为正式 `0.1.0`；字段、状态、错误语义和 Observation 没有随版本提升改变。
+- `package.json#dsh.bundle.patch` 与包内 `cordis.patch.yml` 已落地；发布物使用包名注册，不含开发机绝对路径。
+- npm 预构建 Bundle 已确定为用户推荐入口，tarball 作为本地／离线备用，`--patch` 只用于开发。
+- 实际 `dsh-fate-spectrum-0.1.0.tgz` 已安装进隔离 `web` Profile，DSH 自动追加 Bundle，组合配置和 Web 启动均通过。
 
 ## 待后续确认
 
-- 用户在真实 DSH Web 中复核默认双系统、显式仅紫微和未知时辰十三候选的自然语言体验。
 - 完整视太阳时的离线地点解析、经度修正、均时差来源与跨日行为；地点交互已确认接受城市／区县。
 - 独立干支时间范围 Tool 的下一里程碑名称、Schema 和交付顺序；它用于消除周运任务中耗时且不稳定的 Web 干支历检索。
 - A2UI 走势图的纵轴究竟表达工程计算出的作用强弱、Agent 分析结论，还是两层同时展示；该业务定义进入未来 A2UI 里程碑，不在 v0.1.0 提前拍板。
-- Bundle manifest、tarball 安装与发布候选是否在用户完成本轮 DSH 体验验收后立即进入。
+- push／PR 后的 GitHub CI 结果，以及 npm 发布后的公共源重新安装 smoke；两步都仍需对应授权。
 
 ## 验证状态
 
@@ -100,6 +103,8 @@ Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。C
 - `http://127.0.0.1:3091` 返回 `200 OK`；
 - 27 项测试覆盖 DSH 缺参校验、默认／显式路由、真实八字／紫微 success、未知时辰全天候选、节气边界、农历闰月、流派 A/B/A、非法日期、真太阳时缺经度、Observation、Executor 共享时间短路和 Cordis 单次注册。
 - Node.js 22.19.0 与 24.19.0 下的格式、Lint、类型、测试、离线测试和构建通过；冻结 lockfile 安装通过。
+- Node.js 24.19.0 下正式发布包只包含 7 个允许条目；Node.js 22.19.0 与 24.19.0 均通过实际 tarball 的隔离 DSH Web Profile 安装和启动 smoke。
+- 隔离 Profile 的 manifest 自动包含 `dsh-fate-spectrum`，`--dump-config` 出现 `# == dsh-fate-spectrum` Bundle 层和 `id: fate-spectrum` 插件行。
 
 用户此前已在自己的 DSH 凭据环境中验证自然语言请求、结构化补问、`calculate_fate_chart` 调用和未交付 Observation。Tyme 探针与正式运行时另取得以下证据：
 
@@ -107,9 +112,9 @@ Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。C
 - 默认／晚子时换日和两种起运 Provider 均产生预期差异，A/B/A 状态恢复一致；
 - 合成未知时辰普通日与节气日证明公共契约必须表达候选或澄清，不能填充默认时刻。
 - 正式 Provider contract tests 证明已知字段映射、闰月正负月防腐、全天 1440 分钟完整覆盖、节气候选和 A/B/A 状态恢复。
-- `0.1.0-dev.3` 结果通过 DSH output JSON Schema 校验；新构建经隔离 `DSH_HOME` 的 `--patch --dump-config` 出现 `fate-spectrum -> lib/index.js`。
+- 正式 `0.1.0` 结果通过 DSH output JSON Schema 校验；新构建经隔离 `DSH_HOME` 的 `--patch --dump-config` 出现 `fate-spectrum -> lib/index.js`。
 - 隔离 DSH Web Profile 使用新构建在 `127.0.0.1:3092` 启动并返回 `200 OK`，验证后已关闭。
 
 ## 唯一下一步
 
-用户按更新后的人工 SOP 在已有凭据的 DSH 中验收默认双系统、显式紫微和未知时辰十三候选。验收通过后，再确认进入 Bundle/tarball 发布候选切片，或先开启独立干支历 Tool 里程碑。
+用户审核发布候选 diff 与证据后，决定是否授权 push 当前分支并创建 PR。PR 的必需 CI 全绿、合并与版本归档分别按发布闭环停点确认；Tag、GitHub Release 和 npm publish 仍需最后一次明确授权。

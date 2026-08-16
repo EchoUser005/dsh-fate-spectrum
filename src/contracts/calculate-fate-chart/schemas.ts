@@ -179,7 +179,7 @@ const requestedSystemsOutputSchema = {
 
 const schemaVersionOutputSchema = {
   type: 'string',
-  const: '0.1.0-dev.3',
+  const: '0.1.0',
   required: true,
 } as const
 

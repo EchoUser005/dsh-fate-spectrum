@@ -2,7 +2,7 @@
 
 > 本文是 Tool 契约、执行、失败和 Observation 的专项真相源，修改 Tool 前必须先更新本文或明确说明为何不影响本文。
 
-- 状态：v0.1.0 首版输入已落为 DSH Schema，Tool 已在本地 Profile 注册；`0.1.0-dev.3` 已公开真实八字／紫微 `success`、默认双系统成功、两套未知时辰候选、可修复输入与安全 `partial`。完整视太阳时继续按独立切片冻结。
+- 状态：v0.1.0 首版输入已落为 DSH Schema，Tool 已在本地 Profile 注册；正式 `0.1.0` schema 已公开真实八字／紫微 `success`、默认双系统成功、两套未知时辰候选、可修复输入与安全 `partial`。完整视太阳时继续按独立切片冻结。
 
 ## 1. 为什么单独设计这一层
 
@@ -170,7 +170,7 @@ interface DomainError {
 
 DSH `execute()` 返回 canonical JSON。它是 Tool 的程序化 API，也是 Code Mode 调用得到的值。
 
-当前运行时 `schemaVersion = 0.1.0-dev.3`。八字成功数据只来自 `tyme4ts@1.5.2`，紫微成功数据只来自 `iztro@2.5.8`；两者均离线计算，不使用人工命盘填充运行时成功分支。完整视太阳时未接入时仍返回明确状态。
+当前运行时 `schemaVersion = 0.1.0`。八字成功数据只来自 `tyme4ts@1.5.2`，紫微成功数据只来自 `iztro@2.5.8`；两者均离线计算，不使用人工命盘填充运行时成功分支。完整视太阳时未接入时仍返回明确状态。
 
 ```ts
 type CalculateFateChartResult =
@@ -185,7 +185,7 @@ type CalculateFateChartResult =
 ```ts
 interface CalculateFateChartSuccess {
   status: 'success'
-  schemaVersion: '0.1.0-dev.3'
+  schemaVersion: '0.1.0'
   requestedSystems: FateSystem[]
   systems: Array<
     | { system: 'bazi'; status: 'success'; chart: BaziToolDto }
@@ -205,7 +205,7 @@ interface CalculateFateChartSuccess {
 ```ts
 interface CalculateFateChartNeedsClarification {
   status: 'needs_clarification'
-  schemaVersion: '0.1.0-dev.3'
+  schemaVersion: '0.1.0'
   requestedSystems: FateSystem[]
   error: {
     code: string
@@ -224,7 +224,7 @@ interface CalculateFateChartNeedsClarification {
 ```ts
 interface CalculateFateChartUnsupported {
   status: 'unsupported'
-  schemaVersion: '0.1.0-dev.3'
+  schemaVersion: '0.1.0'
   requestedSystems: FateSystem[]
   error: {
     code: string

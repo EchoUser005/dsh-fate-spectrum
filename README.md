@@ -29,6 +29,37 @@
 
 这些能力最终会连成同一件事：命盘负责提供坐标，现实负责给出反馈，Agent 帮助命主在一次次选择中，更清醒地走向适合自己的位置。
 
+## 安装
+
+### 从 npm 安装
+
+已经安装 DSH 的情况下，把 `dsh-fate-spectrum` 加入日常使用的 Profile：
+
+```bash
+dsh plugin --profile web add dsh-fate-spectrum@0.1.0
+dsh --profile web --dump-config
+dsh web
+```
+
+`--dump-config` 中出现 `dsh-fate-spectrum` 和 `fate-spectrum`，说明 Bundle 已经进入当前 Profile。以后正常打开 DSH，就可以直接在对话里提出排盘或命理分析需求。
+
+升级到最新兼容版本：
+
+```bash
+dsh plugin --profile web up dsh-fate-spectrum
+```
+
+### 从本地安装
+
+下载或自行打包得到 `.tgz` 后，可以不经过 npm 注册表，直接安装同一份预构建 Bundle：
+
+```bash
+dsh plugin --profile web add ./dsh-fate-spectrum-0.1.0.tgz
+dsh --profile web --dump-config
+```
+
+本地开发和 `--patch` 调试方式见 [DSH 本地测试 SOP](https://github.com/EchoUser005/dsh-fate-spectrum/blob/main/docs/develop/dsh-local-test-sop.md)。
+
 ## 使用指南
 
 直接告诉 DSH 想看什么就可以。只说“帮我排盘”，Agent 会补问排盘真正缺少的信息；没有指定八字或紫微时，默认同时计算两套命盘。

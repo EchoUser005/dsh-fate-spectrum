@@ -71,7 +71,7 @@ describe('calculate_fate_chart DSH contract', () => {
 
     expect(result).toMatchObject({
       status: 'success',
-      schemaVersion: '0.1.0-dev.3',
+      schemaVersion: '0.1.0',
       requestedSystems: ['bazi', 'ziwei'],
       systems: [
         {

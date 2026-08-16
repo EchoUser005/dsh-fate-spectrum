@@ -191,8 +191,8 @@ pnpm run build
 
 分发策略：
 
-- **tarball**：v0.1.0 首个真实交付证据；不需要安装时构建授权，最适合冻结发布候选。
-- **npm**：发布前已经构建 `lib/`；只有用户明确授权后执行。
+- **npm**：面向用户的推荐入口。发布物预先构建 `lib/`，用户执行 `dsh plugin --profile web add dsh-fate-spectrum@0.1.0` 即可安装并激活 Bundle；只有用户明确授权后才执行发布。
+- **tarball**：发布候选、本地安装、离线安装和故障排查入口；与 npm 使用同一份预构建内容，不需要安装时构建授权。
 - **GitHub 源码安装**：pnpm 不会自动执行普通 `build`。若未来支持，必须提供自包含 `prepare`，并由安装者在 Profile 的 `pnpm-workspace.yaml` 中显式允许 `allowBuilds`；v0.1.0 不把它作为首要验证路径。
 
 ## 4. 当前目录结构
@@ -323,7 +323,7 @@ DSH 官方 `defineTool()` 从 `parameters` 推导并校验模型参数，`execut
 
 输出维持四种顶层结果候选：`success`、`partial`、`needs_clarification`、`unsupported`。每个系统结果都有自己的状态与来源，不能通过“字段缺失”暗示失败。
 
-运行时 `0.1.0-dev.3` 已接入两套真实 Provider：仅八字、仅紫微和默认双系统均可返回 `success`。一套成功而另一套发生可安全分类的 Provider 失败时仍返回 `partial`；共享输入失败、输出不变量破坏或非预期基础设施异常不降级为 `partial`。人工 fixture 只用于测试，不参与运行时成功结果。
+正式运行时 `0.1.0` 已接入两套真实 Provider：仅八字、仅紫微和默认双系统均可返回 `success`。一套成功而另一套发生可安全分类的 Provider 失败时仍返回 `partial`；共享输入失败、输出不变量破坏或非预期基础设施异常不降级为 `partial`。人工 fixture 只用于测试，不参与运行时成功结果。
 
 ### 6.3 单一来源与隔离方式
 
@@ -356,11 +356,11 @@ DSH 官方 `defineTool()` 从 `parameters` 推导并校验模型参数，`execut
 
 ### 切片 2：八字 Provider 探针与计算决策
 
-目标：先把 Tyme 和完整视太阳时所需能力验证清楚，再写八字正式 Adapter。
+目标：先把 Tyme 所需能力验证清楚，再写八字正式 Adapter；完整视太阳时经审核后确认移出 v0.1.0 发布边界。
 
 - 核验精确版本、许可证、维护状态、日期范围、模块级设置和未知时辰行为。
 - 用人工构造案例验证本版字段、边界、重复确定性和 A/B 隔离。
-- 未知时辰候选、太阳时地点交互精度、换日与起运默认已经冻结；完整视太阳时的数据源和校准算法仍在独立切片验证。
+- 未知时辰候选、太阳时地点交互精度、换日与起运默认已经冻结；完整视太阳时的数据源和校准算法留给后续独立切片，不阻塞本版民用时排盘发布。
 - 探针与规划不一致时暂停，先更新业务输入输出与契约。
 
 ### 切片 3：八字核心计算纵向交付
@@ -409,8 +409,8 @@ DSH 官方 `defineTool()` 从 `parameters` 推导并校验模型参数，`execut
 目标：从实际 tarball 安装到锁定 DSH Profile，完成用户真实体验验收。
 
 - 构建 `lib/`，完成 `package.json` 的 `dsh.bundle` manifest 与包内 `cordis.patch.yml`。
-- `pnpm pack` 后通过 `dsh plugin --profile fate-spectrum-dev add <tarball>` 安装。
-- `dsh --profile fate-spectrum-dev --dump-config` 验证 bundle 层，再启动 Profile。
+- `pnpm run pack:smoke` 生成并审核实际 tarball，再通过 `dsh plugin --profile web add <tarball>` 安装到隔离 DSH Home。
+- `dsh --profile web --dump-config` 验证 Bundle 层和插件行，再启动 Web Profile。
 - Tool 发现、缺参追问、执行、Observation、后续分析、断网、隐私和包内容全部通过。
 - 用户确认用户可见能力后再更新 README；Tag、Release 和 npm 发布仍需单独明确授权。
 
@@ -432,8 +432,7 @@ DSH 官方 `defineTool()` 从 `parameters` 推导并校验模型参数，`execut
 
 - 完整视太阳时的离线地点来源、均时差算法、精度与跨日行为；城市／区县交互粒度已经确认。
 - Provider 全链路的最终并发声明；Tyme 与 iztro 当前都按共享配置保守串行并恢复状态。
-- 发布候选的 Bundle manifest、实际 tarball 内容和干净 Profile 安装结果。
-- 用户在真实 DSH 中对默认双系统、显式紫微和未知时辰十三候选的最终体验验收。
+- npm 发布后的公共源重新安装、版本查询与最小 Profile smoke；执行发布仍需用户当次明确授权。
 
 这些事项必须按切片逐项由用户审核，不能因为目录树已经画出就视为默认同意。
 

@@ -18,3 +18,4 @@
 - [0012 — 首个 Tool 切片锁定 DSH rc.6 发布线](0012-lock-dsh-rc6-for-first-tool-slice.md)
 - [0013 — 未知出生时辰返回完整候选盘](0013-unknown-birth-time-candidates.md)
 - [0014 — 紫微首版契约与默认规则](0014-ziwei-v0-1-contract-and-defaults.md)
+- [0015 — v0.1.0 发布边界与分发入口](0015-v0-1-release-boundary-and-distribution.md)
