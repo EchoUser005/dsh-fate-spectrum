@@ -4,12 +4,12 @@
 
 ## 当前阶段
 
-Phase 0 — 仓库基建与文档层级重组已完成，正在执行最终验证和本地提交收口；未经授权不 push。正式开发前，下一轮先与用户确认排盘 Executor、原子计算能力和 Tool/Observation 分层。
+Phase 0 已通过 PR #1 合并到 `main`。当前正在建立 GitHub CI、PR 模板和主分支合并门禁；不修改运行时代码、Tool 契约或命理计算设计。
 
 ## 活动导航
 
 - 活动里程碑：[`milestones/v0.1.0.md`](milestones/v0.1.0.md)
-- 当前迭代：[`iterations/2026-08-16-phase-0.md`](iterations/2026-08-16-phase-0.md)
+- 当前迭代：[`iterations/2026-08-16-ci-foundation.md`](iterations/2026-08-16-ci-foundation.md)
 - 长期架构：[`../architecture.md`](../architecture.md)
 - Tool 契约：[`../tool-layer.md`](../tool-layer.md)
 
@@ -25,6 +25,7 @@ Phase 0 — 仓库基建与文档层级重组已完成，正在执行最终验�
 
 ## 已完成
 
+- Phase 0 已通过 PR #1 squash merge 到 `main`。
 - 仓库、公开/私人设计资料、DSH、tyme4ts 和 iztro 的只读开工审计。
 - DSH 官方 Node.js、pnpm、ESM 基线确认。
 - 最小 TypeScript、Vitest、Oxlint、Prettier 和 tsdown 基线。
@@ -54,21 +55,14 @@ Phase 0 — 仓库基建与文档层级重组已完成，正在执行最终验�
 
 ## 验证状态
 
-本轮在 Node.js `24.19.0`、pnpm `11.7.0` 下重新验证：
+Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。CI 基建轮的本地证据已通过，真实 GitHub Actions 待 PR 验证：
 
-- Prettier 格式检查；
-- Oxlint（禁止 warning）；
-- TypeScript no-emit 类型检查；
-- Vitest 与 offline Vitest：1 个合成测试通过；
-- tsdown ESM 构建；
-- tarball 打包和内容检查；
-- `git diff --check`；
-- 16 个本地文档链接目标检查；
-- 私人来源、Obsidian embed、英文治理标题和计划外依赖扫描。
-- README 开发状态、依赖、测试与内部架构用语扫描。
+- Node.js `24.19.0` 下的格式、Lint、类型、测试、离线测试、构建与打包；
+- Node.js `22.19.0` 下的最低兼容类型、测试与构建；
+- 外部 PR 必须取得 `owner-approved` 标签的合并策略。
 
 当前没有 DSH Adapter，DSH Profile smoke 不适用，也不能描述成已通过。
 
 ## 唯一下一步
 
-完成 Phase 0 本地提交后停止。下一轮先向用户复述一个排盘 Executor、原子能力目录、Tool Schema、工程结果与 Observation 的职责关系；用户确认理解到位后，才修改 v0.1.0 技术方案或开始 Tool 接入。
+先让 `chore/ci-foundation` 的真实 GitHub Actions 全部通过，再启用 `main` 规则集与仓库合并偏好。随后进入 `docs/v0.1-technical-design`，先审核长期架构、v0.1.0 功能里程碑、渐进式文档路由和详细开发技术方案，不开始运行时实现。
