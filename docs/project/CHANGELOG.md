@@ -21,3 +21,4 @@
 - 产品入口同步：README 改为如实介绍双盘、候选盘、使用方式、数据边界，以及未来干支历和 A2UI 运势走势图。
 - v0.1.0 发布候选：加入正式 DSH Bundle、预构建 tarball、隔离 Profile smoke 与 npm 优先的安装入口。
 - GitHub 发布收口：v0.1.0 发布候选通过 PR #3 的完整 CI 并合并到 `main`，公网包发布继续等待单独授权。
+- v0.1.0 公共发布：npm、Annotated Tag 与 GitHub Release 已上线，并通过公共源 DSH Profile 安装和 Web 启动验证。
