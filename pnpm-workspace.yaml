@@ -1,0 +1,11 @@
+packages:
+  - .
+
+# Mirror the reviewed lifecycle-script policy from the locked DSH release line.
+# Native PTY and FFI packages need their build step; optional SDK generators do not.
+allowBuilds:
+  node-pty: true
+  koffi: true
+  '@deepseek-ai/dsh-subprocess-local': true
+  '@google/genai': false
+  protobufjs: false

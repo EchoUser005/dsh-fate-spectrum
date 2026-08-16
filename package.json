@@ -29,16 +29,30 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "oxlint --deny-warnings src tests *.config.ts",
+    "probe:iztro": "node scripts/probes/iztro-ziwei.mjs",
+    "probe:tyme": "node scripts/probes/tyme-bazi.mjs",
     "test": "vitest run",
     "test:offline": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "dsh:prepare": "pnpm run build && node scripts/create-dsh-dev-patch.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.6"
   },
   "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.6",
     "@types/node": "22.20.0",
     "oxlint": "1.76.0",
     "prettier": "3.9.6",
     "tsdown": "0.22.2",
     "typescript": "6.0.3",
     "vitest": "4.1.8"
+  },
+  "dependencies": {
+    "iztro": "2.5.8",
+    "tyme4ts": "1.5.2"
   }
 }

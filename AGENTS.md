@@ -28,9 +28,11 @@
 | ----------------------------------------------------- | ----------------------------------------------------------------------- |
 | 任何非简单任务                                        | `docs/project/PROJECT_STATE.md` 指向的活动里程碑和当前迭代、相关 ADR    |
 | 判断长期产品方向或架构                                | `README.md`、`docs/architecture.md`、相关 ADR                           |
-| 判断当前版本范围、代码结构、TODO 或完成定义           | `PROJECT_STATE.md` 指向的活动里程碑                                     |
+| 判断当前版本的功能范围、验收节点或完成定义            | `PROJECT_STATE.md` 指向的活动里程碑                                     |
+| 判断当前版本的代码结构、文件职责、实现顺序或测试设计  | 活动里程碑链接的 `docs/develop/` 技术方案                               |
 | 改分层、依赖方向、运行时边界、TypeScript 原则或技术栈 | `docs/architecture.md`、相关 ADR                                        |
 | 改 Tool 参数、输出、状态、错误或模型可见内容          | `docs/tool-layer.md`、相关 ADR；修改前先获用户确认                      |
+| 改共享出生、时间、八字或紫微原子能力输入输出          | 活动 develop 技术方案链接的原子能力审核稿、架构、Provider 探针证据      |
 | 引入或升级 DSH/Cordis，改 Profile、Bundle、Tool 注册  | 锁定版本的 DSH 官方源码与文档，并运行真实组装 smoke                     |
 | 引入或升级命理 Provider                               | 活动里程碑的探针要求、探针记录、许可证声明、差分与隔离测试              |
 | 开始、结束或交接一轮开发                              | `DEVELOPMENT_WORKFLOW.md`、`PROJECT_STATE.md`、活动里程碑               |
@@ -42,7 +44,8 @@
 - [`docs/architecture.md`](docs/architecture.md)：长期架构、TypeScript 判断原则、依赖方向和演进护栏；不记录版本 TODO 或精确文件树。
 - [`docs/tool-layer.md`](docs/tool-layer.md)：Tool、canonical outcome、错误与 Observation 契约。
 - [`docs/project/PROJECT_STATE.md`](docs/project/PROJECT_STATE.md)：唯一的当前进度、阻塞项和下一步。
-- [`docs/project/milestones/`](docs/project/milestones/)：跨多轮版本范围、详细代码树、TODO、决策门、完成定义和归档记录；同一时间只有一个活动里程碑。
+- [`docs/project/milestones/`](docs/project/milestones/)：跨多轮版本的用户功能目标、范围、验收节点、决策门和完成定义；不展开代码树和实现方案，同一时间只有一个活动里程碑。
+- [`docs/develop/`](docs/develop/)：当前版本的开发技术方案，承载业务流水线、精确代码树、文件职责、实现顺序和分层测试；用户批准后才成为实现基线，版本完成后随里程碑冻结归档。
 - [`docs/project/decisions/`](docs/project/decisions/)：用户确认过的长期决策；未决定事项不得写成“已接受”。
 - [`docs/project/iterations/`](docs/project/iterations/)：每轮目标、改动、证据和遗留项。
 - [`docs/project/CHANGELOG.md`](docs/project/CHANGELOG.md)：每轮开发完成后追加一句仓库变更摘要；它是开发索引，不是 README 产品版本史。
@@ -73,6 +76,8 @@ DSH 处于开发者预览期。涉及 DSH 边界时，不能只读本仓库旧�
 - 官方仓库：<https://github.com/deepseek-ai/deepseek-harness>
 - 开发与版本：<https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/development.md>
 - DeepSeek Harness 架构：<https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.zh.md>
+- Capability seams：<https://deepseek-harness.github.io/deepseek-harness/reference/capability-seams>
+- Cordis 论文：<https://github.com/cordiverse/paper>
 - Cordis 插件：<https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/develop/basic/index.md>
 - Tool：<https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/develop/basic/tool.md>
 - 测试：<https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/testing.md>
@@ -84,15 +89,16 @@ DSH 处于开发者预览期。涉及 DSH 边界时，不能只读本仓库旧�
 完整设计见 `docs/architecture.md`。任何实现都必须保持以下稳定边界：
 
 ```text
-DSH Adapter -> Application -> Domain <- Providers
-                         \-> Canonical Result -> Observation
+DSH Adapter -> Task Executor -> Atomic Capability Engines -> Domain Ports <- Providers
+                         \-> Canonical Result -> output.render() -> Observation
 ```
 
 - **Domain 是稳定核心**：不依赖 DSH、Cordis、React、Tyme、iztro、网络、数据库或 Session。
-- **Application 只做用例编排**：归一化输入、解析显式约定、调用独立端口、组合结果；不含历法算法和 DSH 细节。
-- **Provider 是防腐层**：第三方对象、全局设置和异常不得越过 Adapter；八字与紫微必须保持两个独立 Provider/Executor。
+- **Task Executor 只做用例编排**：一个模型可见 Tool 对应一个任务级 Executor；同一插件可以按独立用户任务注册多个 Tool，但不能让一个 Executor 同时承担排盘、干支时间范围解析等不同任务。Executor 归一化输入、解析显式约定、路由原子能力、组合 canonical outcome，不含历法算法和 DSH 细节。
+- **原子计算引擎承载业务计算**：八字、紫微、时间校准和未来干支作用各自拥有可独立审核的输入、输出与不变量；一个排盘 Executor 可以组合它们，但不能把它们混成同一计算模块。
+- **Provider 是引擎背后的防腐层**：第三方对象、全局设置和异常不得越过领域端口；Provider 不是第二个任务级 Executor。
 - **DSH 只在边缘**：用官方 Cordis 生命周期注册能力，不修改或复制 Agent Loop。
-- **输出分三层**：Domain 事实、canonical Tool JSON、模型 Observation/未来 UI 投影不能混用。
+- **输出分三层**：Domain 事实、canonical Tool JSON、模型 Observation/未来 UI 投影不能混用；DSH `output.render()` 承担从 canonical value 到 Observation 的纯投影。
 - **状态按调用隔离**：不保存全局用户、生日或命盘；依赖存在共享可变状态时默认串行，未经证据不得宣称并发安全。
 - **扩展而非侵入**：未来 Skill、Knowledge、Memory、Session Event 和 UI 必须使用 DSH 原生扩展点，并在各自阶段单独设计和授权。
 
@@ -116,7 +122,7 @@ DSH Adapter -> Application -> Domain <- Providers
 
 1. 用户真正要改善的体验是什么？它属于当前阶段吗？
 2. 哪份文档是这项行为的真相源？是否需要先查 DSH 官方变化？
-3. 这项逻辑属于 DSH、Application、Domain、Provider、Observation 还是未来 Presentation？
+3. 这项逻辑属于 DSH Adapter、任务级 Executor、原子计算引擎、Domain、Provider、Observation 还是未来 Presentation？
 4. 输入、输出、失败、取消、并发和隐私边界分别是什么？
 5. 哪个最小证据能证明结果正确，而不是仅证明代码能运行？
 6. 这次改动是否把未来愿景误写成当前能力，或把模型解释误写成确定性事实？
@@ -132,7 +138,7 @@ DSH Adapter -> Application -> Domain <- Providers
 -> diff/隐私/许可证审核 -> 更新项目记录 -> 汇报 -> 等待下一阶段授权
 ```
 
-详细进入条件、证据矩阵和发布闭环见 [`docs/project/DEVELOPMENT_WORKFLOW.md`](docs/project/DEVELOPMENT_WORKFLOW.md)。不得连续跨越基建、Provider 探针、契约冻结、DSH 集成和发布多个阶段。
+详细进入条件、证据矩阵和发布闭环见 [`docs/project/DEVELOPMENT_WORKFLOW.md`](docs/project/DEVELOPMENT_WORKFLOW.md)。每轮只推进活动技术方案中一个已确认的最小切片；不得自行跨越 Tool 骨架、Provider 探针、领域引擎、真实组合和发布候选等审核点。
 
 以下事项立即暂停并询问：
 
@@ -140,7 +146,7 @@ DSH Adapter -> Application -> Domain <- Providers
 - 决定未知时辰、换日、太阳时、闰月或紫微流派默认值；
 - 依赖能力与规划不一致、出现许可证风险或 DSH 官方接口漂移；
 - 需要使用真实生日或持久化出生信息；
-- 增加 Tool、UI、Memory、RAG、服务、数据库、缓存、Python 或第二个 Agent Loop；
+- 改变已确认的 Tool 边界、在当前里程碑提前实现后续 Tool，或增加计划外 UI、Memory、RAG、服务、数据库、缓存、Python、第二个 Agent Loop；
 - push、Tag、Release、部署或 npm 发布。
 
 ## 七、记录、语言与 Git
