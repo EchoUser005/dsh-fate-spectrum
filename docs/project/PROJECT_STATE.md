@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-Phase 0 已通过 PR #1 合并到 `main`。当前正在建立 GitHub CI、PR 模板和主分支合并门禁；不修改运行时代码、Tool 契约或命理计算设计。
+Phase 0 已通过 PR #1 合并到 `main`。GitHub CI、PR 模板、仓库合并偏好和 `main` 规则集已经建立，正在完成 PR #2 的最终合并验证；本轮不修改运行时代码、Tool 契约或命理计算设计。
 
 ## 活动导航
 
@@ -55,14 +55,16 @@ Phase 0 已通过 PR #1 合并到 `main`。当前正在建立 GitHub CI、PR 模
 
 ## 验证状态
 
-Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。CI 基建轮的本地证据已通过，真实 GitHub Actions 待 PR 验证：
+Phase 0 已在 Node.js `24.19.0`、pnpm `11.7.0` 下通过本地基建验证。CI 基建轮已经取得本地和真实 GitHub Actions 证据：
 
 - Node.js `24.19.0` 下的格式、Lint、类型、测试、离线测试、构建与打包；
 - Node.js `22.19.0` 下的最低兼容类型、测试与构建；
-- 外部 PR 必须取得 `owner-approved` 标签的合并策略。
+- PR #2 的 `merge-policy`、`quality`、`node-22-compatibility` 三项检查通过；
+- `main` 规则集已启用上述三项必需检查、PR、线性历史、对话解决、禁止强推和禁止删除；
+- 仓库已设为 squash-only、允许 auto-merge、合并后删除分支；外部 PR 必须取得 `owner-approved` 标签。
 
 当前没有 DSH Adapter，DSH Profile smoke 不适用，也不能描述成已通过。
 
 ## 唯一下一步
 
-先让 `chore/ci-foundation` 的真实 GitHub Actions 全部通过，再启用 `main` 规则集与仓库合并偏好。随后进入 `docs/v0.1-technical-design`，先审核长期架构、v0.1.0 功能里程碑、渐进式文档路由和详细开发技术方案，不开始运行时实现。
+让本次记录提交再次通过新规则并 auto-merge PR #2。随后进入 `docs/v0.1-technical-design`，先审核长期架构、v0.1.0 功能里程碑、渐进式文档路由和详细开发技术方案，不开始运行时实现。
