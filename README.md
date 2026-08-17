@@ -1,5 +1,18 @@
 # dsh-fate-spectrum
 
+> 一个面向 DeepSeek Harness 的八字与紫微斗数确定性排盘插件。
+
+将传统命理中的排盘事实转化为结构化、可复现、可被 AI Agent 直接调用的工具能力。
+
+```bash
+dsh plugin --profile web add dsh-fate-spectrum@0.1.0
+```
+
+
+https://github.com/user-attachments/assets/f0fac8c3-5ebe-4acf-a166-1f05a6f89b6f
+
+<img width="1652" height="868" alt="c707ffa6a17cb3d2e0859fdadd8f5341" src="https://github.com/user-attachments/assets/663c7387-8ed9-4676-b6d1-418ede616434" />
+
 > 每个人都希望活成自己命盘最好的样子。
 
 `dsh-fate-spectrum` 想做的，是陪命主把命盘重新放回真实人生：看见自己的禀赋与节律，理解人生正在经过怎样的阶段，也看清那些更容易发生的高概率应象。
