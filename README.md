@@ -8,7 +8,6 @@
 dsh plugin --profile web add dsh-fate-spectrum@0.1.0
 ```
 
-
 https://github.com/user-attachments/assets/f0fac8c3-5ebe-4acf-a166-1f05a6f89b6f
 
 <img width="1652" height="868" alt="c707ffa6a17cb3d2e0859fdadd8f5341" src="https://github.com/user-attachments/assets/663c7387-8ed9-4676-b6d1-418ede616434" />
